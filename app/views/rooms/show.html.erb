@@ -1,0 +1,70 @@
+<div id="wrapper">
+  <div id="container">
+      
+    <div class="left">
+      <div class="col">
+        <div id="chat-wrapper">
+          <table class="chat">
+          <tbody id="chat">
+          </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="speak">
+      <div id="clipper">
+        <%= form_for [@room, Message.new], id: 'chat_form', remote: true do |f| %>
+          <%= f.hidden_field :username, :value => current_user.name %>
+          <table>
+            <tr>
+              <td class="input">
+                <%= f.text_area :data, id: 'input' %>
+              </td>
+              <td>
+                <div id="chat_controls">
+                  <%= f.submit 'Send Message' %>
+                </div>
+              </td>
+            </tr>
+          </table>
+        <% end %>
+      </div>
+    </div>
+
+    <div id="sidebar" class="member_user">
+      <div id="sidebar_top">
+        <div id="title">
+          <div id="room_title">
+            <h1 id="room_name">EZLAWDEV</h1>
+            <h2 id="topic">Our employees are JAZZED!</h2>
+          </div>
+        </div>
+      </div>
+
+      <div class="participants">
+        <h3>Who's here?</h3>
+        <div id="participants">
+          <ul class="participant-list">
+            <li class="user nubbin_region" id="user_980495">
+              <span class="name">Ian Leong</span>
+            </li>
+            <li class="user nubbin_region idle" id="user_799683">
+                <span class="name">Matt Mondok</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script type="text/html" name='chat-message'>
+<td class="person">
+  <span class="author">{{username}}</span>
+</td>
+<td class="body">
+  <div class="body">{{data}}</div>
+</td>
+</script>

@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Quick Chat</title>
+  <%= stylesheet_link_tag    "application", :media => "all" %>
+  <script src="http://js.pusher.com/1.11/pusher.min.js" type="text/javascript"></script>
+  <%= javascript_include_tag "application" %>
+  <%= csrf_meta_tags %>
+</head>
+<body class='page_on_grey'>
+  <%= yield %>
+</body>
+</html>
