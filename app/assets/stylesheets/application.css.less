@@ -8,16 +8,34 @@
  * You're free to add application-wide styles to this file and they'll appear at the top of the
  * compiled file, but it's generally better to create a new file per style scope.
  *
- *= require 'twitter/bootstrap'
  *= require_self
  *= require_tree .
 */
+@import "twitter/bootstrap";
 
 body{
   padding-top: 60px;
   padding-bottom: 40px;
 }
 
-.sidebar-nav {
+.sidebar-nav{
   padding: 9px 0;
+}
+
+.mini-hero-unit {
+  padding: 10px;
+  margin-bottom: 30px;
+  background-color: #f5f5f5;
+  .border-radius(6px);
+  h1 {
+    margin-bottom: 0;
+    font-size: 30px;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  p {
+    font-size: 16px;
+    font-weight: 200;
+    line-height: @baseLineHeight * 1.5;
+  }
 }
