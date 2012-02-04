@@ -1,3 +1,7 @@
-Pusher.app_id = '14205'
-Pusher.key = 'b35414373fbe5cd93f3d'
-Pusher.secret = '1754242b032fac5c3839'
+config_file = File.join(Rails.root, 'config/pusher.yml')
+PusherConfig = YAML.load(ERB.new(File.read(config_file)).result)[Rails.env]
+
+Pusher.app_id = PusherConfig['app_id']
+Pusher.key = PusherConfig['app_key']
+Pusher.secret = PusherConfig['app_secret']
+Pusher.logger = Rails.logger

@@ -1,15 +1,24 @@
-<%= form_for @room do |f| %>
-  <div class='field'>
-    <%= f.label :name, "Name" %>
-    <%= f.text_field :name %>  
-  </div>
+<%= form_for @room, :html => {:class => 'form-horizontal'} do |f| %>
+  <fieldset>
+    <legend>Create Room</legend>
 
-  <div class='field'>
-    <%= f.label :topic, "Topic" %>
-    <%= f.text_field :topic %>  
-  </div>
+    <div class="control-group">
+      <%= f.label :name, "Name", :class => 'control-label' %>
+      <div class='controls'>
+        <%= f.text_field :name, :class => 'input-xlarge' %>
+      </div>
+    </div>
 
-  <div class='button-wrapper'>
-    <%= f.submit 'Create Room' %>
-  </div>
+    <div class="control-group">
+      <%= f.label :topic, "Topic", :class => 'control-label' %>
+      <div class='controls'>
+        <%= f.text_field :topic, :class => 'input-xlarge' %>
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" class="btn btn-primary">Save changes</button>
+      <button type="reset" class="btn">Cancel</button>
+    </div>
+  </fieldset>
 <% end %>
