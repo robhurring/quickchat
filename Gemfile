@@ -6,6 +6,7 @@ gem 'bson_ext', '~> 1.5'
 gem 'pusher'
 gem 'cancan'
 gem 'jquery-rails'
+gem 'less-rails-bootstrap'
 
 # gem 'jbuilder'
 
