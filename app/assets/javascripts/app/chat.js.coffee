@@ -1,6 +1,7 @@
 class window.Chat
-  constructor: (@data) ->
+  constructor: (@pusher_key, @data) ->
     @connect()
+    @room = new Room @data
 
   connect: ->
-    @pusher = new Pusher 'b35414373fbe5cd93f3d'
+    @pusher = new Pusher @pusher_key
