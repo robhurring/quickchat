@@ -3,7 +3,7 @@ class window.ChatController
     @connect()
     @room = new Room @data
     @messages = new Messages @data.messages
-    @chatView = new ChatView collection: @messages
+    @chatView = new ChatView collection: @messages, el: ($ '#chat')
     @messageFormView = new MessageFormView el: ($ '#message-form')
     @users = []
     @loadViews()
@@ -18,7 +18,7 @@ class window.ChatController
     @channel.bind 'receive_message', @receiveMessage
 
   loadViews: ->
-    ($ '#chat').html @chatView.render().el
+    @chatView.render()
 
   receiveMessage: (data) =>
     console.log 'Message', data

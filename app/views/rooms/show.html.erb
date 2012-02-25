@@ -44,18 +44,21 @@
 
 <div id='message-form' class='row-fluid'>
   <%= form_for [@room, Message.new], html: {id: 'chat_form', class: 'well'}, remote: true do |f| %>
-    <div class='offset2'>
+    <div class='offset2 control-group'>
+      <div class="error-messages hidden">
+        <span id='error-message' class="label label-important"></span>
+      </div>
       <%= text_area_tag :message, '', id: 'input', class: 'input-xlarge span6', rows: 3, placeholder: 'Type Message...' %>
       <%= f.button 'Send', class: 'btn btn-large btn-primary' %>
     </div>
   <% end %>
 </div>
 
-<script type="text/x-handlebars-template" name="chat-message">
-  <div class='username span2'>
-    {{username}}
-  </div>
-  <div class='data span9'>
-    {{{emojify data}}}
-  </div>
+<script type="text/x-handlebars-template" name="chat-message" data-template="default">
+  <div class='username span2'>{{username}}</div>
+  <div class='data span9'>{{{friendly data}}}</div>
+</script>
+
+<script type="text/x-handlebars-template" name="command-chat-message" data-template="command">
+  <div>{{data}}</div>
 </script>

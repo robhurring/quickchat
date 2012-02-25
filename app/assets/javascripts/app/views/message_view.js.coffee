@@ -1,9 +1,10 @@
 class window.MessageView extends Backbone.View
-  className: 'chat-message row-fluid'
+  className: "chat-message row-fluid"
 
   initialize: ->
-    @template = Handlebars.compile ($ 'script[name=chat-message]').html().trim()
+    type = @model.get('type')
+    @template = Templates[type] || Templates['default']
 
   render: ->
-    ($ @el).html @template(@model.toJSON())
+    @.$el.addClass(@model.get('type')).html(@template(@model.toJSON()))
     this

@@ -1,6 +1,4 @@
 class window.ChatView extends Backbone.View
-  className: 'chat-messages'
-
   initialize: ->
     _.bindAll @, 'render', 'resize', 'setScroll'
     @collection.on 'reset', @render
@@ -10,13 +8,13 @@ class window.ChatView extends Backbone.View
     messageFormHeight = ($ '#message-form').outerHeight()
     windowHeight = ($ window).outerHeight()
     newHeight = windowHeight - messageFormHeight - ($ @el).offset().top - 60
-    ($ @el).css height: newHeight
-    @setScroll()
+    @.$el.css height: newHeight
 
   setScroll: ->
     ($ window).scrollTop(0)
-    ($ @el).scrollTop(@el.scrollHeight)
+    @.$el.scrollTop(@el.scrollHeight)
 
+  # TODO: optimize rendering
   render: ->
     $el = ($ @el)
     $el.html ''
@@ -25,4 +23,5 @@ class window.ChatView extends Backbone.View
 
     @el = $el[0]
     @resize()
+    @setScroll()
     this
