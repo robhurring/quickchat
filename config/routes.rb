@@ -2,6 +2,9 @@ Quickchat::Application.routes.draw do
   root :to => 'home#index'
 
   resources :rooms do
-    resources :messages, :only => [:create]
+    member do
+      post 'join'
+    end
+    resources :messages, only: [:create]
   end
 end

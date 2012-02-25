@@ -1,5 +1,10 @@
+<% content_for :scripts do %>
+  <%= javascript_include_tag "app" %>
+<% end %>
+
 <script type="text/javascript">
   window.PUSHER_KEY = "<%= Pusher.key %>";
+  window.PUSHER_AUTH_ENDPOINT = "<%= join_room_path @room %>";
   window.RoomData = <%= @room.to_json.html_safe %>;
 </script>
 
@@ -14,36 +19,10 @@
   <div class="span9">
     <div class="mini-hero-unit">
       <h1><%= @room.name %></h1>
-      <p>This is the rooms topic</p>
+      <p><%= @room.topic %></p>
     </div>
 
     <div id='chat' class='row-fluid'>
-      <div class='chat-message'>
-        <div class='username span2'>
-          UserName
-        </div>
-        <div class='data span9'>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce suscipit, libero a aliquam euismod, magna nibh molestie erat, nec volutpat neque tellus in velit. Nam dui elit, vulputate eget vulputate et, fringilla vel mauris. Quisque lacinia orci sed felis congue in tempor felis accumsan. Nullam non mauris sapien, aliquet dictum purus. Quisque nec mi ligula, at lacinia justo. Sed felis nulla, accumsan eget lacinia et, volutpat sit amet lorem. Proin fermentum est vel leo sagittis facilisis. Quisque placerat est ut nisi euismod sit amet vestibulum erat pretium. Maecenas vel nulla ac urna semper tempor eget at ligula.<p>
-        </div>
-      </div>
-
-      <div class='chat-message'>
-        <div class='username span2'>
-          UserName
-        </div>
-        <div class='data span9'>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce suscipit, libero a aliquam euismod, magna nibh molestie erat, nec volutpat neque tellus in velit. Nam dui elit, vulputate eget vulputate et, fringilla vel mauris. Quisque lacinia orci sed felis congue in tempor felis accumsan. Nullam non mauris sapien, aliquet dictum purus. Quisque nec mi ligula, at lacinia justo. Sed felis nulla, accumsan eget lacinia et, volutpat sit amet lorem. Proin fermentum est vel leo sagittis facilisis. Quisque placerat est ut nisi euismod sit amet vestibulum erat pretium. Maecenas vel nulla ac urna semper tempor eget at ligula.<p>
-        </div>
-      </div>
-
-      <div class='chat-message'>
-        <div class='username span2'>
-          UserName
-        </div>
-        <div class='data span9'>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce suscipit, libero a aliquam euismod, magna nibh molestie erat, nec volutpat neque tellus in velit. Nam dui elit, vulputate eget vulputate et, fringilla vel mauris. Quisque lacinia orci sed felis congue in tempor felis accumsan. Nullam non mauris sapien, aliquet dictum purus. Quisque nec mi ligula, at lacinia justo. Sed felis nulla, accumsan eget lacinia et, volutpat sit amet lorem. Proin fermentum est vel leo sagittis facilisis. Quisque placerat est ut nisi euismod sit amet vestibulum erat pretium. Maecenas vel nulla ac urna semper tempor eget at ligula.<p>
-        </div>
-      </div>
     </div>
   </div>
 
@@ -66,8 +45,7 @@
 <div class='row-fluid'>
   <%= form_for [@room, Message.new], html: {id: 'chat_form', class: 'well'}, remote: true do |f| %>
     <div class='offset2'>
-      <%= f.hidden_field :username, :value => current_user.name %>
-      <%= f.text_area :data, id: 'input', class: 'input-xlarge span6', rows: 3, placeholder: 'Type Message...' %>
+      <%= text_area_tag :message, '', id: 'input', class: 'input-xlarge span6', rows: 3, placeholder: 'Type Message...' %>
       <%= f.button 'Send', class: 'btn btn-large btn-primary' %>
     </div>
   <% end %>
@@ -80,9 +58,4 @@
   <div class='data span9'>
     {{data}}
   </div>
-</script>
-
-<script type="text/x-handlebars-template" name="user-list">
-
-
 </script>

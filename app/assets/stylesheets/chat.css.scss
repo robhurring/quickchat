@@ -1,0 +1,23 @@
+.clearfix{
+  zoom:1;
+  &:before,
+  &:after{
+    content: "\0020";
+    display: block;
+    height: 0;
+    overflow: hidden;
+  }
+  &:after{
+    clear: both;
+  }
+}
+
+.chat-message{
+  margin-bottom:10px;
+  padding:10px;
+  border-bottom:1px dotted #c7c7c7;
+
+  .username{
+    font-weight:bold;
+  }
+}

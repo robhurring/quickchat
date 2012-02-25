@@ -1,5 +1,6 @@
 class RoomsController < ApplicationController
   respond_to :html
+  protect_from_forgery except: :join
 
   def new
     @room = Room.new
@@ -13,5 +14,15 @@ class RoomsController < ApplicationController
   def show
     @room = Room.find(params[:id])
     respond_with @room
+  end
+
+  def join
+    response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
+      user_id: 0,
+      user_info: {
+        name: 'Anonymous'
+      }
+    })
+    render json: response
   end
 end

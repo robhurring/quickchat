@@ -7,7 +7,6 @@
 #     console.log message
 
 # WEB_SOCKET_DEBUG = true;
-
 $ ->
-  # pusher = new Pusher 'b35414373fbe5cd93f3d'
-  window.chat = new Chat RoomData
+  Pusher.channel_auth_endpoint = PUSHER_AUTH_ENDPOINT;
+  window.chat_controller = new ChatController PUSHER_KEY, RoomData

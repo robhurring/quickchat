@@ -7,8 +7,8 @@ gem 'pusher'
 gem 'cancan'
 gem 'jquery-rails'
 gem 'less-rails-bootstrap'
-gem 'twitter_bootstrap_form_for'
 gem 'settable'
+gem 'draper'
 
 # gem 'jbuilder'
 

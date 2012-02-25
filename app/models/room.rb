@@ -13,7 +13,11 @@ class Room
   validates_presence_of :name
   validates_presence_of :password, :if => proc{ |r| r.private == true }
 
+  def channel
+    "presence-#{id}"
+  end
+
   def as_json(options = {})
-    super only: [:name, :topic, :messages]
+    super only: [:_id, :name, :topic, :messages]
   end
 end
