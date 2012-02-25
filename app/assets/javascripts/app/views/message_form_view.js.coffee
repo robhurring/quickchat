@@ -6,7 +6,9 @@ class window.MessageFormView extends Backbone.View
     'ajax:complete form': 'messageSent'
 
   monitorKeyPress: (e) ->
-    ($ @el).find('form').submit() if e.which == 13 and not e.shiftKey
+    if e.which == 13 and not e.shiftKey
+      e.preventDefault() # stop the line from breaking
+      ($ @el).find('form').submit()
 
   sendMessage: ->
     # validate input here
