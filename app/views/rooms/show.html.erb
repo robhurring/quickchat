@@ -8,13 +8,6 @@
   window.RoomData = <%= @room.to_json.html_safe %>;
 </script>
 
-<div id='connection-alert' class="alert alert-info">
-  <p>Connecting to room...</p>
-  <div class="progress progress-info progress-striped active">
-    <div class="bar" style="width: 100%;"></div>
-  </div>
-</div>
-
 <div class="row-fluid">
   <div class="span9">
     <div class="mini-hero-unit">
@@ -27,22 +20,29 @@
   </div>
 
   <div class="span3">
-  <div class="well sidebar-nav">
-    <ul class="nav nav-list">
-      <li class="nav-header">Who Am I?</li>
-      <li><a href='#'><%= current_user.name %></a></li>
-    </ul>
-  </div>
+    <div class="well sidebar-nav">
+      <ul class="nav nav-list">
+        <li class="nav-header">Who Am I?</li>
+        <li><a href='#'><%= current_user.name %></a></li>
+      </ul>
+    </div>
 
     <div class="well sidebar-nav">
       <ul class="nav nav-list">
         <li class="nav-header">Whos Here?</li>
       </ul>
     </div>
+
+    <div id='connection-alert' class="alert alert-info">
+      <p>Connecting to room...</p>
+      <div class="progress progress-info progress-striped active">
+        <div class="bar" style="width: 100%;"></div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class='row-fluid'>
+<div id='message-form' class='row-fluid'>
   <%= form_for [@room, Message.new], html: {id: 'chat_form', class: 'well'}, remote: true do |f| %>
     <div class='offset2'>
       <%= text_area_tag :message, '', id: 'input', class: 'input-xlarge span6', rows: 3, placeholder: 'Type Message...' %>
@@ -56,6 +56,6 @@
     {{username}}
   </div>
   <div class='data span9'>
-    {{data}}
+    {{{emojify data}}}
   </div>
 </script>

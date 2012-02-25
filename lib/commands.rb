@@ -1,6 +1,7 @@
 module Commands
-  mattr_accessor :listeners
+  mattr_accessor :listeners, :replacements
   self.listeners = {}
+  self.replacements = {}
 
 module_function
 
@@ -15,10 +16,19 @@ module_function
     self.listeners[regex] = block
   end
 
+  def replace(regex, &block)
+    self.replacements[regex] = block
+  end
+
   def process(message)
-    listeners.detect do |regex, block|
-      regex.match(message){ |matches| return block.call *matches }
+    replacements.each do |regex, block|
+      message.gsub!(regex, &block)
     end
+
+    listeners.detect do |regex, block|
+      regex.match(message){ |matches| return block.call message, *matches[1..-1] }
+    end
+
     send :text, message
   end
 

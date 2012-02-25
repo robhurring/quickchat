@@ -1,5 +1,7 @@
+require 'rack/utils'
+
 class Message
-  Types = [:text, :sound, :image, :video, :command]
+  Types = [:text, :paste, :sound, :image, :video, :command]
 
   include Mongoid::Document
   include Mongoid::Timestamps::Created
@@ -9,6 +11,10 @@ class Message
   field :type, type: Symbol
 
   embedded_in :room
+
+  def data=(val)
+    write_attribute :data, ERB::Util.html_escape(val)
+  end
 
   def type
     super || :text

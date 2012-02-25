@@ -4,6 +4,7 @@ class window.ChatController
     @room = new Room @data
     @messages = new Messages @data.messages
     @chatView = new ChatView collection: @messages
+    @messageFormView = new MessageFormView el: ($ '#message-form')
     @users = []
     @loadViews()
 
@@ -20,8 +21,8 @@ class window.ChatController
     ($ '#chat').html @chatView.render().el
 
   receiveMessage: (data) =>
-    @messages.add new Message(data)
     console.log 'Message', data
+    @messages.add new Message(data)
 
   changeTopic: (data) =>
     console.log 'Change Topic', data

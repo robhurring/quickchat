@@ -5,16 +5,13 @@ class MessagesController < ApplicationController
     room = Room.find(params[:room_id])
     command = Commands.process params[:message]
 
-    case command.command
+    # TODO: refactor this
+    case command.type
     when :rename
       old_name = current_user.name
       self.current_user = User.new(command.data)
-      command.data = "#{old_name} is now known as #{current_user.name}"
+      command.data = %{"#{old_name}" is now known as "#{current_user.name}"}
       command.type = :command
-    when :clear
-      room.messages.destroy_all
-      command.type = :text
-      command.data = 'Room Cleared.'
     end
 
     @message = room.messages.new(
