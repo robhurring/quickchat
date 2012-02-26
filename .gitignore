@@ -16,5 +16,4 @@
 /log/*.log
 /tmp
 
-config/pusher.yml
 config/mongoid.yml
