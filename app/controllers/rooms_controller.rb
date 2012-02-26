@@ -1,5 +1,5 @@
 class RoomsController < ApplicationController
-  respond_to :html
+  respond_to :html, :json
   protect_from_forgery except: :join
 
   def new

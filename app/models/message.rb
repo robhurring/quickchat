@@ -1,5 +1,3 @@
-require 'rack/utils'
-
 class Message
   include Mongoid::Document
   include Mongoid::Timestamps::Created
@@ -19,6 +17,6 @@ class Message
   end
 
   def as_json(options = {})
-    super only: [:id, :username, :data, :type]
+    super only: [:_id, :username, :data, :type]
   end
 end

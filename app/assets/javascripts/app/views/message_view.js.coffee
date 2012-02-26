@@ -6,5 +6,6 @@ class window.MessageView extends Backbone.View
     @template = Templates[type] || Templates['default']
 
   render: ->
-    @.$el.addClass(@model.get('type')).html(@template(@model.toJSON()))
+    @.$el.addClass(@model.get('type')).attr('data-id', @model.get('_id'))
+    @.$el.html(@template(@model.toJSON()))
     this
