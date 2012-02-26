@@ -1,8 +1,6 @@
 require 'rack/utils'
 
 class Message
-  Types = [:text, :paste, :sound, :image, :video, :command]
-
   include Mongoid::Document
   include Mongoid::Timestamps::Created
 

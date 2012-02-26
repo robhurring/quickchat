@@ -1,4 +1,5 @@
 require 'commands'
+require 'oembed'
 
 module Commands
   listen %r{[\n]+} do |message|
@@ -16,5 +17,9 @@ module Commands
   # catch all commands
   listen %r{^/([a-z]+)\s?(.+)?} do |message, cmd, args|
     command cmd.to_sym, args
+  end
+
+  listen ::OEmbed.regex do |url, type|
+    send :oembed, ::OEmbed.url(url)
   end
 end

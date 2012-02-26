@@ -54,11 +54,18 @@
   <% end %>
 </div>
 
-<script type="text/x-handlebars-template" name="chat-message" data-template="default">
+<script type="text/x-handlebars-template" data-template="default">
   <div class='username span2'>{{username}}</div>
-  <div class='data span9'>{{{friendly data}}}</div>
+  <div class='data span9'>{{{autolink data}}}</div>
 </script>
 
-<script type="text/x-handlebars-template" name="command-chat-message" data-template="command">
+<script type="text/x-handlebars-template" data-template="command">
   <div>{{data}}</div>
 </script>
+
+<script type="text/x-handlebars-template" data-template="image">
+  <div class='username span2'>{{username}}</div>
+  <div class='data span9'>{{{imglink data}}}</div>
+</script>
+
+

@@ -12,6 +12,13 @@
   }
 }
 
+  .fail{
+    background:red;
+    border: 1px solid red;
+  }
+
+
+
 .box{
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;
@@ -38,6 +45,19 @@
     font-size:12px;
     line-height:14px;
     white-space: pre;
+  }
+
+  &.image .data img{
+    -webkit-box-shadow: 2px 2px 5px #ccc;
+    -moz-box-shadow: 2px 2px 5px #ccc;
+    -ms-box-shadow: 2px 2px 5px #ccc;
+    box-shadow: 2px 2px 5px #ccc;
+
+    &.failed{
+      background:red;
+      height:100px;
+      width:100px;
+    }
   }
 
   &.command{

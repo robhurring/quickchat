@@ -1,27 +1,25 @@
 class window.ChatView extends Backbone.View
   initialize: ->
-    _.bindAll @, 'render', 'resize', 'setScroll'
+    _.bindAll @, 'render', 'appendMessage', 'resize', 'scrollToBottom'
     @collection.on 'reset', @render
-    @collection.on 'add', @render
+    @collection.on 'add', @appendMessage
+    @collection.on 'add', @scrollToBottom
 
   resize: ->
     messageFormHeight = ($ '#message-form').outerHeight()
     windowHeight = ($ window).outerHeight()
     newHeight = windowHeight - messageFormHeight - ($ @el).offset().top - 60
     @.$el.css height: newHeight
+    @scrollToBottom()
 
-  setScroll: ->
-    ($ window).scrollTop(0)
-    @.$el.scrollTop(@el.scrollHeight)
+  scrollToBottom: ->
+    @.$el.scrollTo '100%'
 
-  # TODO: optimize rendering
+  appendMessage: (message) ->
+    @.$el.append new MessageView(model: message).render().el
+
   render: ->
-    $el = ($ @el)
-    $el.html ''
-    @collection.forEach (message) ->
-      $el.append new MessageView(model: message).render().el
+    @collection.forEach (message) =>
+      @appendMessage message
 
-    @el = $el[0]
-    @resize()
-    @setScroll()
     this

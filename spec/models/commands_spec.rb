@@ -27,6 +27,13 @@ describe Commands do
     end
   end
 
+  context 'oembed' do
+    it 'should recognize youtube' do
+      command = process 'http://www.youtube.com/watch?v=RRWAQ255qhs'
+      command.type.should eq(:oembed)
+    end
+  end
+
   context 'listening' do
     it 'should recognize pastes' do
       command = process "a\nb\nc\n"
