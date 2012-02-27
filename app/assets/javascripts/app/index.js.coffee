@@ -47,5 +47,6 @@ $ ->
 
   Pusher.channel_auth_endpoint = PUSHER_AUTH_ENDPOINT;
   window.chatController = new ChatController PUSHER_KEY, RoomData
+  window.windowController = new WindowController()
   ($ window).resize chatController.chatView.resize
   chatController.chatView.resize()

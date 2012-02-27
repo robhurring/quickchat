@@ -3,9 +3,7 @@ class window.ChatController
     @connect()
     @messages = new Messages @data.messages
     @chatView = new ChatView collection: @messages, el: ($ '#chat')
-    @windowView = new WindowView @messages
     @messageFormView = new MessageFormView el: ($ '#message-form')
-
     @users = []
     @loadViews()
 

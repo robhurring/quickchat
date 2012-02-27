@@ -1,13 +1,16 @@
-class window.WindowView
-  constructor: (@messages) ->
+class window.WindowController
+  constructor: ->
+    _.bindAll @, 'updateCount'
+
     @unreadMessages = 0
     @title = ($ 'title').text()
     @focus = true
     ($ window).on 'focus', @gainedFocus
     ($ window).on 'blur', @lostFocus
-    @messages.bind 'add', @updateCount
+    chatController.messages.bind 'add', @updateCount
 
   updateCount: =>
+    console.log 'update'
     unless @focus
       @unreadMessages += 1
       ($ 'title').text "#{@title} [#{@unreadMessages}]"
