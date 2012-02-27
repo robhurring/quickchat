@@ -1,10 +1,11 @@
 class window.ChatController
   constructor: (@pusher_key, @data) ->
     @connect()
-    @room = new Room @data
     @messages = new Messages @data.messages
     @chatView = new ChatView collection: @messages, el: ($ '#chat')
+    @windowView = new WindowView @messages
     @messageFormView = new MessageFormView el: ($ '#message-form')
+
     @users = []
     @loadViews()
 
