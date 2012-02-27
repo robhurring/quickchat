@@ -10,7 +10,6 @@ class window.WindowController
     chatController.messages.bind 'add', @updateCount
 
   updateCount: =>
-    console.log 'update'
     unless @focus
       @unreadMessages += 1
       ($ 'title').text "#{@title} [#{@unreadMessages}]"
