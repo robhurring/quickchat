@@ -21,7 +21,6 @@ class window.ChatController
     @chatView.render()
 
   receiveMessage: (data) =>
-    console.log 'Message', data
     @messages.add new Message(data)
 
   changeTopic: (data) =>

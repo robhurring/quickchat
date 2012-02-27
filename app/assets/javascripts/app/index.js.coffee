@@ -16,13 +16,13 @@ Handlebars.registerHelper 'autolink', (text) ->
   text
 
 Handlebars.registerHelper 'linkify', (text) ->
-  pattern = /((href=(?:'|")?)?(https?:\/\/|\bwww\.)(\S+)(\/(?:\S+))?)/
+  pattern = /((href=(?:'|")?)?(https?:\/\/|\bwww\.)(\S+)(\/(?:\S+))?)/ig
 
   text.replace pattern, (url) ->
     "<a href='#{url}' target='_blank'>#{url}</a>"
 
 Handlebars.registerHelper 'emojify', (text) ->
-  pattern = /:([a-z0-9\+\-_]+):/i
+  pattern = /:([a-z0-9\+\-_]+):/ig
 
   text.replace pattern, (emoji_symbol) ->
     emoji = emoji_symbol[1...-1]
@@ -30,7 +30,7 @@ Handlebars.registerHelper 'emojify', (text) ->
 
 Handlebars.registerHelper 'imglink', (url) ->
   img = $('<img/>').attr('src', url).load((e) ->
-    chat_controller.chatView.scrollToBottom()
+    chatController.chatView.scrollToBottom()
   )
 
   elem = $("<a href='#{url}' target='_blank'>").html(img)
@@ -46,6 +46,6 @@ $ ->
     Templates[$this.data('template')] = Handlebars.compile($this.html().trim())
 
   Pusher.channel_auth_endpoint = PUSHER_AUTH_ENDPOINT;
-  window.chat_controller = new ChatController PUSHER_KEY, RoomData
-  ($ window).resize chat_controller.chatView.resize
-  chat_controller.chatView.resize()
+  window.chatController = new ChatController PUSHER_KEY, RoomData
+  ($ window).resize chatController.chatView.resize
+  chatController.chatView.resize()
