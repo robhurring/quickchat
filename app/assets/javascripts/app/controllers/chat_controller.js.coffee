@@ -3,9 +3,10 @@ class window.ChatController
     @connect()
     @bind()
     @messages = new Messages @data.messages
-    @chatView = new ChatView collection: @messages, el: ($ '#chat')
+    @users = new Users @data.users
+    @chatView = new ChatView el: ($ '#chat'), collection: @messages
     @messageFormView = new MessageFormView el: ($ '#message-form')
-    @users = []
+    @usersView = new UsersView el: ($ '#users'), collection: @users
     @loadViews()
 
   connect: ->
@@ -22,9 +23,9 @@ class window.ChatController
     ($ window).unload (e) ->
       $.ajax url: PUSHER_LEAVE_ENDPOINT, async: false, type: 'POST'
 
-
   loadViews: ->
     @chatView.render()
+    @usersView.render()
 
   receiveMessage: (data) =>
     @messages.add new Message(data)
@@ -37,9 +38,12 @@ class window.ChatController
 
   subscribed: (data) =>
     ($ '#connection-alert').fadeOut('slow')
+    data.each (user) =>
+      @users.add new User id: user.id, name: user.info.name
 
   userJoined: (data) =>
-    console.log 'User Joined', data
+    @users.add new User id: data.id, name: data.info.name
 
   userLeft: (data) =>
-    console.log 'User Left', data
+    console.log 'left', data
+    @users.remove data.id

@@ -28,9 +28,9 @@ class RoomsController < ApplicationController
     )
 
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
-      user_id: 0,
+      user_id: current_user.id,
       user_info: {
-        name: 'Anonymous'
+        name: current_user.name
       }
     })
 

@@ -1,0 +1,1 @@
+class window.Users extends Backbone.Collection

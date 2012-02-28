@@ -7,4 +7,8 @@ class User
   def self.anonymous
     create name: 'anonymous'
   end
+
+  def as_json(options = {})
+    super only: [:_id, :name]
+  end
 end
