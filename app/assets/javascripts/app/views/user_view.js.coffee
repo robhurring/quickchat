@@ -7,7 +7,7 @@ class window.UserView extends Backbone.View
     @model.bind 'change', @updateUser
 
   updateUser: ->
-    ($ "[data-id=#{@model.id}]").html @model.get('name')
+    @.$el.text @model.get('name')
 
   render: ->
     @.$el.attr('data-id', @model.id)
