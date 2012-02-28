@@ -18,11 +18,12 @@ class CommandProcessor
   end
 
   class Sandbox
-    attr_accessor :current_user, :message
+    attr_accessor :current_user, :room, :message
 
     def initialize(current_user, message, actions)
       @current_user = current_user
       @message = message
+      @room = message.room
 
       actions.each do |method, block|
         meta_def(method, &block)
@@ -30,7 +31,7 @@ class CommandProcessor
     end
 
     def pusher
-      Pusher[message.room.channel]
+      Pusher[room.channel]
     end
 
     def set_type(val)

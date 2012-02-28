@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
     message = processor.process(message)
 
     if message.save
-      Pusher[room.channel].trigger! :receive_message, message.to_json
+      Pusher[room.channel].trigger! 'message:received', message.to_json
       render :json => message, :status => :created
     else
       respond_with(message.errors, :status => :unprocessable_entity)

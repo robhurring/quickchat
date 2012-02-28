@@ -1,11 +1,15 @@
 class window.ChatController
   constructor: (@pusher_key, @data) ->
-    @connect()
     @messages = new Messages @data.messages
     @users = new Users @data.users
+    @room = new Room name: @data.name, topic: @data.topic
+
     @chatView = new ChatView el: ($ '#chat'), collection: @messages
+    @roomNameView = new RoomNameView el: ($ '#room-name'), model: @room
     @messageFormView = new MessageFormView el: ($ '#message-form')
     @usersView = new UsersView el: ($ '#users'), collection: @users
+
+    @connect()
     @bind()
     @loadViews()
 
@@ -18,8 +22,9 @@ class window.ChatController
     @channel.bind 'pusher:subscription_error', @subscriptionError
     @channel.bind 'pusher:member_added', @userJoined
     @channel.bind 'pusher:member_removed', @userLeft
-    @channel.bind 'renamed_user', @renamedUser
-    @channel.bind 'receive_message', @receiveMessage
+    @channel.bind 'message:received', @receiveMessage
+    @channel.bind 'user:updated', @updatedUser
+    @channel.bind 'room:updated', @updatedRoom
 
     ($ window).unload (e) ->
       $.ajax url: PUSHER_LEAVE_ENDPOINT, async: false, type: 'POST'
@@ -48,5 +53,8 @@ class window.ChatController
   userLeft: (data) =>
     @users.remove data.id
 
-  renamedUser: (data) =>
+  updatedUser: (data) =>
     @users.get(data.id).set('name', data.name)
+
+  updatedRoom: (data) =>
+    @room.set('topic', data.topic)

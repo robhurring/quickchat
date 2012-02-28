@@ -34,7 +34,7 @@ class RoomsController < ApplicationController
       }
     })
 
-    Pusher[room.channel].trigger! :receive_message, message.to_json
+    Pusher[room.channel].trigger! 'message:received', message.to_json
 
     render json: response
   end
@@ -49,7 +49,7 @@ class RoomsController < ApplicationController
       data: "#{current_user.name} just left."
     )
 
-    Pusher[room.channel].trigger! :receive_message, message.to_json
+    Pusher[room.channel].trigger! 'message:received', message.to_json
 
     render nothing: true, status: :ok
   end

@@ -3,6 +3,12 @@ require 'oembed'
 CommandProcessor.setup do
   action :rename do |new_name|
     current_user.update_attribute :name, new_name
+    pusher.trigger! 'user:updated', current_user.to_json
+  end
+
+  action :change_topic do |new_topic|
+    room.update_attribute :topic, new_topic
+    pusher.trigger! 'room:updated', room.to_json
   end
 
   listen ::OEmbed.regex do |url, host|
@@ -27,9 +33,15 @@ CommandProcessor.setup do
     rename new_name
 
     set_type :command
-    set_data "#{old_name} renamed to #{new_name}"
+    set_data %{#{old_name} is now known as #{new_name}}
+  end
 
-    pusher.trigger! :renamed_user, current_user.to_json
+  listen %r{^/topic (.+)} do |data, new_topic|
+    old_topic = room.topic
+    change_topic new_topic
+
+    set_type :command
+    set_data %{#{current_user.name} changed the topic from "#{old_topic}" to "#{new_topic}"}
   end
 end
 
