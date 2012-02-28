@@ -1,17 +1,14 @@
 class OEmbed
-  Providers = {
-    'www.youtube.com' => 'http://www.youtube.com/oembed?url=%s&format=json',
-    'www.flickr.com' => 'http://www.flickr.com/services/oembed/?url=%s'
-  }
+  Providers = [
+    'www.youtube.com',
+    'www.flickr.com',
+    'vimeo.com'
+  ]
 
   class << self
     def regex
-      hosts = Providers.keys.join '|'
-      %r{^https?:\/\/(#{Regexp.escape hosts})}
-    end
-
-    def url(url)
-      url
+      hosts = Providers.map{ |host| Regexp.escape host }.join '|'
+      %r{(?:https?://)(#{hosts})(?:\/(?:\S+))}
     end
   end
 end

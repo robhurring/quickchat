@@ -1,25 +1,35 @@
-require 'commands'
 require 'oembed'
 
-module Commands
-  listen %r{[\n]+} do |message|
-    send :paste, message
+CommandProcessor.setup do
+  action :rename do |new_name|
+    current_user.update_attribute :name, new_name
+  end
+
+  listen ::OEmbed.regex do |url, host|
+    set_type :oembed
   end
 
   listen %r{^https?:\/\/(.+)(gif|jpe?g|png)$} do |url, type|
-    send :image, url
+    set_type :image
+  end
+
+  listen %r{[\n]+} do |message|
+    set_type :paste
   end
 
   listen %r{^/play (.+)} do |message, sound|
-    send :sound, sound
+    set_type :sound
+    set_data sound
   end
 
-  # catch all commands
-  listen %r{^/([a-z]+)\s?(.+)?} do |message, cmd, args|
-    command cmd.to_sym, args
-  end
+  listen %r{^/rename (.+)} do |data, new_name|
+    old_name = current_user.name
+    rename new_name
 
-  listen ::OEmbed.regex do |url, type|
-    send :oembed, ::OEmbed.url(url)
+    set_type :command
+    set_data "#{old_name} renamed to #{new_name}"
+
+    pusher.trigger! :renamed_user, current_user.to_json
   end
 end
+

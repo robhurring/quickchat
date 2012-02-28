@@ -4,30 +4,21 @@ class MessagesController < ApplicationController
   def create
     current_user.heartbeat!
 
-    room = Room.find(params[:room_id])
-    command = Commands.process params[:message]
-
-    # TODO: refactor this
-    case command.type
-    when :rename
-      old_name = current_user.name
-      current_user.update_attribute :name, command.data
-      command.data = %{"#{old_name}" is now known as "#{current_user.name}"}
-      command.type = :command
-      Pusher[room.channel].trigger!('renamed_user', current_user.to_json)
-    end
-
-    @message = room.messages.new(
+    room = Room.find params[:room_id]
+    message = room.messages.new(
       username: current_user.name,
-      type: command.type,
-      data: command.data
+      type: :text,
+      data: params[:message]
     )
 
-    if @message.save
-      Pusher[room.channel].trigger!('receive_message', @message.to_json)
-      render :json => @message, :status => :created
+    processor = CommandProcessor.new(self)
+    message = processor.process(message)
+
+    if message.save
+      Pusher[room.channel].trigger! :receive_message, message.to_json
+      render :json => message, :status => :created
     else
-      respond_with(@message.errors, :status => :unprocessable_entity)
+      respond_with(message.errors, :status => :unprocessable_entity)
     end
   end
 end
