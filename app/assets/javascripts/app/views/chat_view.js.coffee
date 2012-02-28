@@ -7,6 +7,22 @@ class window.ChatView extends Backbone.View
     @collection.on 'remove', @removeMessage
     @collection.on 'add', @appendMessage
     @collection.on 'add', @scrollToBottom
+    @collection.on 'add', @oembed
+    @collection.on 'reset', @oembed
+
+  oembed: ->
+    self = @
+    ($ '.oembed .data').each (i, el) ->
+      $this = ($ this)
+      $this.oembed $this.data('url'),
+        beforeEmbed: ->
+          $this.addClass 'embedding'
+        afterEmbed: ->
+          self.scrollToBottom()
+          $this.removeClass 'embedding'
+          $this.addClass 'embedded'
+        onError: (url) ->
+          console.log "Error embedding: #{url}"
 
   resize: ->
     messageFormHeight = ($ '#message-form').outerHeight()
@@ -28,4 +44,5 @@ class window.ChatView extends Backbone.View
     @collection.forEach (message) =>
       @appendMessage message
 
+    @oembed()
     this

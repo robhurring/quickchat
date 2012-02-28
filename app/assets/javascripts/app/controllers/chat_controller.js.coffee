@@ -1,19 +1,19 @@
 class window.ChatController
   constructor: (@pusher_key, @data) ->
     @connect()
-    @bind()
     @messages = new Messages @data.messages
     @users = new Users @data.users
     @chatView = new ChatView el: ($ '#chat'), collection: @messages
     @messageFormView = new MessageFormView el: ($ '#message-form')
     @usersView = new UsersView el: ($ '#users'), collection: @users
+    @bind()
     @loadViews()
 
   connect: ->
     @pusher = new Pusher @pusher_key
     @channel = @pusher.subscribe "presence-#{@data._id}"
 
-  bind: ->
+  bind: =>
     @channel.bind 'pusher:subscription_succeeded', @subscribed
     @channel.bind 'pusher:subscription_error', @subscriptionError
     @channel.bind 'pusher:member_added', @userJoined
@@ -40,7 +40,7 @@ class window.ChatController
   subscribed: (data) =>
     ($ '#connection-alert').fadeOut('slow')
     data.each (user) =>
-      @users.add new User id: user.id, name: user.info.name
+      @users.add new User id: user.id, name: user.info.name, current: true
 
   userJoined: (data) =>
     @users.add new User id: data.id, name: data.info.name
@@ -49,5 +49,4 @@ class window.ChatController
     @users.remove data.id
 
   renamedUser: (data) =>
-    console.log 'update', data
     @users.get(data.id).set('name', data.name)

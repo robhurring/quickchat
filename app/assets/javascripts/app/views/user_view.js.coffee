@@ -15,5 +15,6 @@ class window.UserView extends Backbone.View
 
   render: ->
     @.$el.attr('data-id', @model.id)
+    @.$el.addClass 'current-user' if @model.id == CURRENT_USER_ID
     @.$el.html(@model.get('name'))
     this

@@ -12,12 +12,14 @@
   }
 }
 
-  .fail{
-    background:red;
-    border: 1px solid red;
+.current-user{
+  color:#6CC9FF;
+  font-weight:bold;
+  font-size:1.1em;
+  &:before{
+    content:'☞ '
   }
-
-
+}
 
 .box{
   -webkit-border-radius: 4px;
@@ -38,6 +40,17 @@
   }
 
   &.text{
+  }
+
+  &.oembed{
+    .embedding{
+      font-size:2.5em;
+      color:#DEBF05;
+    }
+
+    .embedded{
+
+    }
   }
 
   &.paste .data{

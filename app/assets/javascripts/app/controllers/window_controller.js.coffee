@@ -21,3 +21,4 @@ class window.WindowController
 
   lostFocus: =>
     @focus = false
+

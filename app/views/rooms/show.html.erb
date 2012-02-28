@@ -6,6 +6,7 @@
   window.PUSHER_KEY = "<%= Pusher.key %>";
   window.PUSHER_AUTH_ENDPOINT = "<%= join_room_path @room %>";
   window.PUSHER_LEAVE_ENDPOINT = "<%= leave_room_path @room %>";
+  window.CURRENT_USER_ID = "<%= current_user.id %>";
   window.RoomData = <%= @room.to_json.html_safe %>;
 </script>
 
@@ -60,4 +61,14 @@
 <script type="text/x-handlebars-template" data-template="image">
   <div class='username span2'>{{username}}</div>
   <div class='data span9'>{{{imglink data}}}</div>
+</script>
+
+<script type="text/x-handlebars-template" data-template="oembed">
+  <div class='username span2'>{{username}}</div>
+  <div class='data span9' data-url="{{data}}">
+    <%= image_tag 'spinner-pacman.gif' %>
+    <% 10.times do %>
+      &middot;
+    <% end %>
+  </div>
 </script>
