@@ -7,12 +7,12 @@ class RoomsController < ApplicationController
   end
 
   def create
-    @room = Room.create(params[:room])
+    @room = Room.create params[:room]
     respond_with @room
   end
 
   def show
-    @room = Room.find(params[:id])
+    @room = Room.find params[:id]
     respond_with @room
   end
 
@@ -42,7 +42,6 @@ class RoomsController < ApplicationController
   def leave
     room = Room.find params[:id]
     room.users.delete current_user
-    # destroy_user!
 
     message = room.messages.new(
       username: current_user.name,

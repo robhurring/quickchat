@@ -46,7 +46,6 @@ class window.ChatController
     @users.add new User id: data.id, name: data.info.name
 
   userLeft: (data) =>
-    console.log 'left', data
     @users.remove data.id
 
   renamedUser: (data) =>
