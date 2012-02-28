@@ -2,6 +2,8 @@ class MessagesController < ApplicationController
   respond_to :json
 
   def create
+    current_user.heartbeat!
+
     room = Room.find(params[:room_id])
     command = Commands.process params[:message]
 
@@ -12,6 +14,7 @@ class MessagesController < ApplicationController
       current_user.update_attribute :name, command.data
       command.data = %{"#{old_name}" is now known as "#{current_user.name}"}
       command.type = :command
+      Pusher[room.channel].trigger!('renamed_user', current_user.to_json)
     end
 
     @message = room.messages.new(

@@ -18,6 +18,7 @@ class window.ChatController
     @channel.bind 'pusher:subscription_error', @subscriptionError
     @channel.bind 'pusher:member_added', @userJoined
     @channel.bind 'pusher:member_removed', @userLeft
+    @channel.bind 'renamed_user', @renamedUser
     @channel.bind 'receive_message', @receiveMessage
 
     ($ window).unload (e) ->
@@ -47,3 +48,7 @@ class window.ChatController
   userLeft: (data) =>
     console.log 'left', data
     @users.remove data.id
+
+  renamedUser: (data) =>
+    console.log 'update', data
+    @users.get(data.id).set('name', data.name)

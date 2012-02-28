@@ -41,7 +41,8 @@ class RoomsController < ApplicationController
 
   def leave
     room = Room.find params[:id]
-    destroy_user!
+    room.users.delete current_user
+    # destroy_user!
 
     message = room.messages.new(
       username: current_user.name,
