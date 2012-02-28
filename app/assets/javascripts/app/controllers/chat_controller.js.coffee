@@ -1,6 +1,7 @@
 class window.ChatController
   constructor: (@pusher_key, @data) ->
     @connect()
+    @bind()
     @messages = new Messages @data.messages
     @chatView = new ChatView collection: @messages, el: ($ '#chat')
     @messageFormView = new MessageFormView el: ($ '#message-form')
@@ -10,11 +11,17 @@ class window.ChatController
   connect: ->
     @pusher = new Pusher @pusher_key
     @channel = @pusher.subscribe "presence-#{@data._id}"
+
+  bind: ->
     @channel.bind 'pusher:subscription_succeeded', @subscribed
     @channel.bind 'pusher:subscription_error', @subscriptionError
     @channel.bind 'pusher:member_added', @userJoined
     @channel.bind 'pusher:member_removed', @userLeft
     @channel.bind 'receive_message', @receiveMessage
+
+    ($ window).unload (e) ->
+      $.ajax url: PUSHER_LEAVE_ENDPOINT, async: false, type: 'POST'
+
 
   loadViews: ->
     @chatView.render()

@@ -5,6 +5,7 @@
 <script type="text/javascript">
   window.PUSHER_KEY = "<%= Pusher.key %>";
   window.PUSHER_AUTH_ENDPOINT = "<%= join_room_path @room %>";
+  window.PUSHER_LEAVE_ENDPOINT = "<%= leave_room_path @room %>";
   window.RoomData = <%= @room.to_json.html_safe %>;
 </script>
 

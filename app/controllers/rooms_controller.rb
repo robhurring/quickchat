@@ -17,12 +17,37 @@ class RoomsController < ApplicationController
   end
 
   def join
+    room = Room.find params[:id]
+
+    message = room.messages.new(
+      username: current_user.name,
+      type: :command,
+      data: "#{current_user.name} just joined."
+    )
+
     response = Pusher[params[:channel_name]].authenticate(params[:socket_id], {
       user_id: 0,
       user_info: {
         name: 'Anonymous'
       }
     })
+
+    Pusher[room.channel].trigger!('receive_message', message.to_json)
+
     render json: response
+  end
+
+  def leave
+    room = Room.find params[:id]
+
+    message = room.messages.new(
+      username: current_user.name,
+      type: :command,
+      data: "#{current_user.name} just left."
+    )
+
+    Pusher[room.channel].trigger!('receive_message', message.to_json)
+
+    render nothing: true, status: :ok
   end
 end
