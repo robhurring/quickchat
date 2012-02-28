@@ -8,11 +8,16 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user=(user)
-    session[:username] = user.name
+    session[:user_id] = user.id
     @current_user = user
   end
 
+  def destroy_user!
+    session.delete :user_id
+    current_user.destroy
+  end
+
   def set_current_user
-    self.current_user = session.has_key?(:username) ? User.new(session[:username]) : User.anonymous
+    self.current_user = session.has_key?(:user_id) ? User.find(session[:user_id]) : User.anonymous
   end
 end

@@ -18,6 +18,8 @@ class RoomsController < ApplicationController
 
   def join
     room = Room.find params[:id]
+    room.users << current_user
+    room.save
 
     message = room.messages.new(
       username: current_user.name,
@@ -39,6 +41,7 @@ class RoomsController < ApplicationController
 
   def leave
     room = Room.find params[:id]
+    destroy_user!
 
     message = room.messages.new(
       username: current_user.name,

@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
     case command.type
     when :rename
       old_name = current_user.name
-      self.current_user = User.new(command.data)
+      current_user.update_attribute :name, command.data
       command.data = %{"#{old_name}" is now known as "#{current_user.name}"}
       command.type = :command
     end

@@ -1,11 +1,10 @@
 class User
-  attr_accessor :name
+  include Mongoid::Document
+
+  field :username, type: String
+  has_and_belongs_to_many :rooms
 
   def self.anonymous
-    new 'anonymous'
-  end
-
-  def initialize(name)
-    @name = name
+    create name: 'anonymous'
   end
 end
