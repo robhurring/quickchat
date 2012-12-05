@@ -17,3 +17,4 @@
 /tmp
 
 config/mongoid.yml
+config/pusher.yml
