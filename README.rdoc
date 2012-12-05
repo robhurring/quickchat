@@ -1,3 +1,0 @@
-Chat experiment
-
-Hosted: http://http://quickchat.herokuapp.com/
